@@ -93,6 +93,23 @@
 
         #noBtn { position: absolute; transition: 0.1s; left: 60%; }
         #yesBtn { position: absolute; left: 20%; }
+
+        /* Mute Button in corner */
+        #muteBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 77, 109, 0.3);
+            padding: 10px;
+            border-radius: 50%;
+            font-size: 12px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
     </style>
 </head>
 <body>
@@ -103,6 +120,8 @@
         <source src="music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
+
+    <button id="muteBtn" class="hidden" onclick="toggleMute()">🔊</button>
 
     <!-- PAGE 1: START -->
     <div id="page1" class="container">
