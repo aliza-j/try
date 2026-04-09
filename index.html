@@ -56,7 +56,6 @@
             transform: scale(1.05);
         }
 
-        /* Page 2 & 3 Image Styles */
         .profile-pic, .slideshow-img {
             width: 250px;
             height: 250px;
@@ -66,7 +65,6 @@
             margin-bottom: 15px;
         }
 
-        /* Slideshow Animation */
         .slideshow-container {
             position: relative;
             width: 250px;
@@ -74,16 +72,9 @@
             margin-bottom: 15px;
         }
 
-        .fade {
-            animation: fadeAnim 1.5s;
-        }
+        .fade { animation: fadeAnim 1.5s; }
+        @keyframes fadeAnim { from {opacity: .4} to {opacity: 1} }
 
-        @keyframes fadeAnim {
-            from {opacity: .4} 
-            to {opacity: 1}
-        }
-
-        /* Page 4 Styles */
         .btn-group {
             margin-top: 30px;
             position: relative;
@@ -109,7 +100,6 @@
             align-items: center;
             justify-content: center;
         }
-        
     </style>
 </head>
 <body>
@@ -117,7 +107,7 @@
     <!-- BACKGROUND AUDIO -->
     <!-- Replace 'music.mp3' with your actual file link -->
     <audio id="myAudio" loop>
-        <source src="music.mp3" type="audio/mpeg">
+        <source src="music.mp3" type="audio/mpeg"></source>
         Your browser does not support the audio element.
     </audio>
 
@@ -126,29 +116,29 @@
     <!-- PAGE 1: START -->
     <div id="page1" class="container">
         <h1>Hey You! 🎂</h1>
-        <p>I made something special for you.</p>
-        <button onclick="nextPage(1, 2)">Click to Start</button>
+        <p>I have a surprise for you. Please turn on your sound!</p>
+        <button onclick="startExperience()">Click to Start</button>
     </div>
 
     <!-- PAGE 2: WISHES -->
     <div id="page2" class="container hidden">
         <img src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=400" alt="Birthday" class="profile-pic">
         <h1>Happy Birthday, [Name]!</h1>
-        <p>To the most amazing person I know. May your day be as bright as your smile!</p>
-        <button onclick="nextPage(2, 3); startSlideshow()">See our memories ❤️</button>
+        <p>You make every day feel like a celebration. May this year be your best one yet!</p>
+        <button onclick="nextPage(2, 3); startSlideshow()">Our Memories ❤️</button>
     </div>
 
-    <!-- PAGE 3: SLIDESHOW (The New Page) -->
+    <!-- PAGE 3: SLIDESHOW -->
     <div id="page3" class="container hidden">
-        <h1>Some Memories...</h1>
+        <h1>Moments with You...</h1>
         <div class="slideshow-container">
-            <!-- Replace these URLs with your actual photos -->
+            <!-- Replace these with your photo URLs -->
             <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400" style="display:block">
             <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1464349172904-164bb213702a?w=400" style="display:none">
             <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1514525253361-bee8a48740d7?w=400" style="display:none">
         </div>
-        <p>Every moment with you is a gift.</p>
-        <button onclick="nextPage(3, 4)">Continue...</button>
+        <p>Just a few of my favorite memories.</p>
+        <button onclick="nextPage(3, 4)">One last thing...</button>
     </div>
 
     <!-- PAGE 4: THE QUESTION -->
@@ -161,7 +151,7 @@
     </div>
 
     <script>
-         const audio = document.getElementById("myAudio");
+        const audio = document.getElementById("myAudio");
 
         // Start everything and play music
         function startExperience() {
@@ -169,8 +159,8 @@
             document.getElementById('muteBtn').classList.remove('hidden');
             nextPage(1, 2);
         }
-        
-        // Page Navigation
+
+        // Navigation
         function nextPage(current, next) {
             document.getElementById('page' + current).classList.add('hidden');
             document.getElementById('page' + next).classList.remove('hidden');
@@ -186,21 +176,29 @@
             slideIndex++;
             if (slideIndex > slides.length) {slideIndex = 1}    
             slides[slideIndex-1].style.display = "block";  
-            setTimeout(startSlideshow, 2500); // Change image every 2.5 seconds
+            setTimeout(startSlideshow, 2500);
         }
 
-        // Runaway "No" Button Logic
+        // Runaway Button
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const container = document.querySelector('.container');
-            
-            // Random position within the viewport
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-
             noBtn.style.position = "fixed";
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
+        }
+
+        // Mute Toggle
+        function toggleMute() {
+            const btn = document.getElementById('muteBtn');
+            if (audio.muted) {
+                audio.muted = false;
+                btn.innerHTML = "🔊";
+            } else {
+                audio.muted = true;
+                btn.innerHTML = "🔇";
+            }
         }
 
         // Final Celebration
@@ -208,10 +206,10 @@
             const container = document.getElementById('page4');
             container.innerHTML = `
                 <h1 style="font-size: 50px;">💖</h1>
-                <h1>I Knew It!</h1>
-                <p>You're stuck with me forever now. Happy Birthday! 🎉</p>
+                <h1>Yay! I Love You Too!</h1>
+                <p>Happy Birthday! Hope you liked your surprise!</p>
             `;
-            alert("Yay! ❤️");
+            alert("Best Birthday Ever! 🎉");
         }
     </script>
 </body>
