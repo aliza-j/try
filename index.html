@@ -161,6 +161,15 @@
     </div>
 
     <script>
+         const audio = document.getElementById("myAudio");
+
+        // Start everything and play music
+        function startExperience() {
+            audio.play().catch(error => console.log("Audio play failed:", error));
+            document.getElementById('muteBtn').classList.remove('hidden');
+            nextPage(1, 2);
+        }
+        
         // Page Navigation
         function nextPage(current, next) {
             document.getElementById('page' + current).classList.add('hidden');
