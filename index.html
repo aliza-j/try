@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffe4e1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 450px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hidden { display: none !important; }
+
+        h1 { color: #ff4d6d; margin-bottom: 10px; }
+        p { color: #555; line-height: 1.6; }
+
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+            margin-top: 20px;
+            z-index: 10;
+        }
+
+        button:hover {
+            background: #ff758f;
+            transform: scale(1.05);
+        }
+
+        /* Page 2 & 3 Image Styles */
+        .profile-pic, .slideshow-img {
+            width: 250px;
+            height: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+            border: 5px solid #ff4d6d;
+            margin-bottom: 15px;
+        }
+
+        /* Slideshow Animation */
+        .slideshow-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin-bottom: 15px;
+        }
+
+        .fade {
+            animation: fadeAnim 1.5s;
+        }
+
+        @keyframes fadeAnim {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* Page 4 Styles */
+        .btn-group {
+            margin-top: 30px;
+            position: relative;
+            width: 100%;
+            height: 100px;
+        }
+
+        #noBtn { position: absolute; transition: 0.1s; left: 60%; }
+        #yesBtn { position: absolute; left: 20%; }
+    </style>
+</head>
+<body>
+
+    <!-- PAGE 1: START -->
+    <div id="page1" class="container">
+        <h1>Hey You! 🎂</h1>
+        <p>I made something special for you.</p>
+        <button onclick="nextPage(1, 2)">Click to Start</button>
+    </div>
+
+    <!-- PAGE 2: WISHES -->
+    <div id="page2" class="container hidden">
+        <img src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?w=400" alt="Birthday" class="profile-pic">
+        <h1>Happy Birthday, [Name]!</h1>
+        <p>To the most amazing person I know. May your day be as bright as your smile!</p>
+        <button onclick="nextPage(2, 3); startSlideshow()">See our memories ❤️</button>
+    </div>
+
+    <!-- PAGE 3: SLIDESHOW (The New Page) -->
+    <div id="page3" class="container hidden">
+        <h1>Some Memories...</h1>
+        <div class="slideshow-container">
+            <!-- Replace these URLs with your actual photos -->
+            <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400" style="display:block">
+            <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1464349172904-164bb213702a?w=400" style="display:none">
+            <img class="slideshow-img fade" src="https://images.unsplash.com/photo-1514525253361-bee8a48740d7?w=400" style="display:none">
+        </div>
+        <p>Every moment with you is a gift.</p>
+        <button onclick="nextPage(3, 4)">Continue...</button>
+    </div>
+
+    <!-- PAGE 4: THE QUESTION -->
+    <div id="page4" class="container hidden">
+        <h1 id="questionText">Do you love me? 🥺</h1>
+        <div class="btn-group">
+            <button id="yesBtn" onclick="celebrate()">Yes!</button>
+            <button id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function nextPage(current, next) {
+            document.getElementById('page' + current).classList.add('hidden');
+            document.getElementById('page' + next).classList.remove('hidden');
+        }
+
+        // Slideshow Logic
+        let slideIndex = 0;
+        function startSlideshow() {
+            const slides = document.getElementsByClassName("slideshow-img");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex-1].style.display = "block";  
+            setTimeout(startSlideshow, 2500); // Change image every 2.5 seconds
+        }
+
+        // Runaway "No" Button Logic
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const container = document.querySelector('.container');
+            
+            // Random position within the viewport
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            noBtn.style.position = "fixed";
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // Final Celebration
+        function celebrate() {
+            const container = document.getElementById('page4');
+            container.innerHTML = `
+                <h1 style="font-size: 50px;">💖</h1>
+                <h1>I Knew It!</h1>
+                <p>You're stuck with me forever now. Happy Birthday! 🎉</p>
+            `;
+            alert("Yay! ❤️");
+        }
+    </script>
+</body>
+</html>
